@@ -11,4 +11,6 @@ options:
   -h, --help            show this help message and exit
   -s STOCKS [STOCKS ...], --stocks STOCKS [STOCKS ...]
                         List of stocks to monitor.
+  -d DEFAULT_STOCKS [DEFAULT_STOCKS ...], --default_stocks DEFAULT_STOCKS [DEFAULT_STOCKS ...]
+                        Set the default stocks to monitor.
 ```
