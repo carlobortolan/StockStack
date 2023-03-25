@@ -1,17 +1,40 @@
+import argparse
 import yfinance as yf
 
-# Define a function to retrieve and display the current stock prices
-def get_current_stock_prices(stocks):
-    # Retrieve the current stock prices using the yfinance library
-    tickers = yf.Tickers(stocks)
-    data = tickers.history(period="1d")
-    prices = data['Close'].values.tolist()
-    # Display the current stock prices in the terminal
-    for stock, price in zip(stocks, prices):
-        print(f"{stock}: {price}")
+DEFAULT_STOCKS = ["AAPL", "MSFT", "TSLA"]  # Default stocks to monitor
 
-# Define a list of stocks to monitor
-stocks = ["AAPL", "MSFT", "GOOG"]
 
-# Call the function to retrieve and display the current stock prices
-get_current_stock_prices(stocks)
+def get_current_stock_prices(stocks=DEFAULT_STOCKS):
+    """
+    Retrieve and display the current stock prices for the given stocks.
+
+    Parameters:
+        stocks (list of str): A list of stock symbols to monitor.
+
+    Returns:
+        dict: A dictionary mapping stock symbols to their current prices.
+    """
+    try:
+        tickers = yf.Tickers(stocks)
+        data = tickers.history(period="1d", interval="1m")
+        prices = data['Close'].values.tolist()
+        stock_prices = {}
+        for stock, price in zip(stocks, prices):
+            stock_prices[stock] = price
+            print(f"{stock}: ${price}")
+        return stock_prices
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return None
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Retrieve current stock prices.")
+    parser.add_argument("-s", "--stocks", nargs="+", help="List of stocks to monitor.")
+    args = parser.parse_args()
+
+    # Retrieve and display the current stock prices
+    if args.stocks:
+        get_current_stock_prices(args.stocks)
+    else:
+        get_current_stock_prices()
