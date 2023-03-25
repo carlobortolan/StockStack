@@ -10,7 +10,7 @@ stock prices and display them in the terminal.
 1. Make sure to have [yfinance](https://pypi.org/project/yfinance/) and other needed dependecies installed
 
 ```
-$ pip install -r requirements.txt
+$ pip install -r stockstack/requirements.txt
 ```
 
 2. Clone this repository to your local machine
