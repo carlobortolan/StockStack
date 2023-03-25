@@ -5,7 +5,7 @@ Look up current stock prices from your terminal.
 ## INSTALLATION
 1. Clone the repository
 
-  `git clone https://github.com/joschahenningsen/wikipedia-define-cli ~/wikipedia-define-cli`
+  `git clone https://github.com/carlobortolan/StockStack.git ~/stockstack`
 
 2. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
 
