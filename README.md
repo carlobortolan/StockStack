@@ -1,10 +1,49 @@
-# StockStack
+# StockStack-CLI
 
 Look up current stock prices from your terminal.
 
+## INSTALLATION
+1. Make sure to have [yfinance](https://pypi.org/project/yfinance/) installed
+ 
 ```
-usage: caller.py [-h] [-s STOCKS [STOCKS ...]]
+$ pip install yfinance
+```
 
+
+2. Clone the repository
+
+```
+$ git clone https://github.com/carlobortolan/StockStack.git ~/stockstack
+```
+
+
+3. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
+
+```
+$ echo 'alias <YOUR_ALIAS>="python3 ~/stockstack/caller.py"'>>~/.bashrc
+```
+
+
+> _**OPTIONAL**: If you want to have stockstack launch whenever you open a new terminal add:_
+> ```
+> $ echo '<YOUR_ALIAS>'>>~/.bashrc
+> ```
+
+
+4. Update your _.bashrc_, _.zshrc_, etc.
+
+```
+$ source ~/.bashrc
+```
+
+
+## HOW TO USE
+
+```
+ $ <YOUR_ALIAS> [-h] [-s STOCKS [STOCKS ...]]
+```
+
+```
 Retrieve current stock prices.
 
 options:
