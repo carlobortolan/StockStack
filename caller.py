@@ -1,10 +1,11 @@
 import argparse
+
 import yfinance as yf
 
 DEFAULT_STOCKS = ["AAPL", "MSFT", "TSLA"]  # Default stocks to monitor
 
 
-def get_current_stock_prices(stocks=DEFAULT_STOCKS):
+def get_current_stock_prices(stocks=None):
     """
     Retrieve and display the current stock prices for the given stocks.
 
@@ -14,6 +15,8 @@ def get_current_stock_prices(stocks=DEFAULT_STOCKS):
     Returns:
         dict: A dictionary mapping stock symbols to their current prices.
     """
+    if stocks is None:
+        stocks = DEFAULT_STOCKS
     try:
         tickers = yf.Tickers(stocks)
         data = tickers.history(period="1d", interval="1m")
@@ -23,6 +26,9 @@ def get_current_stock_prices(stocks=DEFAULT_STOCKS):
             stock_prices[stock] = price
             print(f"{stock}: ${price}")
         return stock_prices
+    except KeyError as e:
+        print(f"Invalid stock symbol: {e}")
+        return None
     except Exception as e:
         print(f"An error occurred: {e}")
         return None
@@ -33,8 +39,11 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--stocks", nargs="+", help="List of stocks to monitor.")
     args = parser.parse_args()
 
-    # Retrieve and display the current stock prices
+    # Determine which stocks to monitor
     if args.stocks:
-        get_current_stock_prices(args.stocks)
+        query = args.stocks
     else:
-        get_current_stock_prices()
+        query = DEFAULT_STOCKS
+
+    # Retrieve and display the current stock prices
+    get_current_stock_prices(query)
