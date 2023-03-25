@@ -1,0 +1,4 @@
+setuptools==67.6.0
+yfinance==0.2.14
+argparse~=1.4.0
+matplotlib~=3.7.1
