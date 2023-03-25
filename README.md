@@ -41,23 +41,25 @@ $ source ~/.bashrc
 Retrieve current stock prices.
 
 ```
-$ <YOUR_ALIAS>   [] [-h] [-s STOCKS [STOCKS ...]]
-                 [-d DEFAULT_STOCKS [DEFAULT_STOCKS ...]]
-                 [-u UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...]]
-                 [--details [DETAILS]]
+$ <YOUR_ALIAS>  [] [-s STOCK_SYMBOL [STOCK_SYMBOL ...]]
+                [-d STOCK_SYMBOL [STOCK_SYMBOL ...]]
+                [-u STOCK_SYMBOL [STOCK_SYMBOL ...]] 
+                [-p] [--details] [-v] [-h]
 ```
 
 ```
 options:
-options:
   -h, --help            show this help message and exit
-  -s STOCKS [STOCKS ...], --stocks STOCKS [STOCKS ...]
+  -s STOCK_SYMBOL [STOCK_SYMBOL ...], --stocks STOCK_SYMBOL [STOCK_SYMBOL ...]
                         List of stocks to monitor.
-  -d DEFAULT_STOCKS [DEFAULT_STOCKS ...], --default_stocks DEFAULT_STOCKS [DEFAULT_STOCKS ...]
+  -d STOCK_SYMBOL [STOCK_SYMBOL ...], --default_stocks STOCK_SYMBOL [STOCK_SYMBOL ...]
                         Set the default stocks to monitor.
-  -u UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...], --update_default_stocks UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...]
+  -u STOCK_SYMBOL [STOCK_SYMBOL ...], --update_default_stocks STOCK_SYMBOL [STOCK_SYMBOL ...]
                         Update the default stocks.
+  -p [PLOT], --plot [PLOT]
+                        Plot the current or default stocks.
   --details [DETAILS]   Display additional details about a stock.
+  -v, --version         show program's version number and exit
 ```
 
 ## EXAMPLES

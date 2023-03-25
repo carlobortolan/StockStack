@@ -1,5 +1,6 @@
 import yfinance as yf
 import argparse
+import matplotlib.pyplot as plt
 from typing import List, Dict, Any
 from pathlib import Path
 
@@ -60,13 +61,14 @@ def update_default_stocks(new_stocks: List[str]) -> List[str]:
 DEFAULT_STOCKS = read_default_stocks() or ["AAPL", "MSFT", "TSLA"]
 
 
-def get_current_stock_prices(stocks: List[str] = None, details: str = None) -> Dict[str, Any]:
+def get_current_stock_prices(stocks: List[str] = None, details: bool = None, plot: bool = None) -> Dict[str, Any]:
     """
     Retrieve and display the current stock prices for the given stocks.
 
     Parameters:
         stocks (list of str): A list of stock symbols to monitor.
-        details (str): Additional details to display about the specified stock.
+        details (bool): Display additional details about the specified stock.
+        plot (bool): Plot graph of the specified stock.
 
     Returns:
         dict: A dictionary mapping stock symbols to their current prices.
@@ -93,6 +95,15 @@ def get_current_stock_prices(stocks: List[str] = None, details: str = None) -> D
                 print(f"{mh}")
             else:
                 print(f"{stock}: ${price:}")
+
+        # Plot the stock prices over time
+        if plot:
+            plt.plot(prices)
+            plt.ylabel('Price')
+            plt.xlabel('Time')
+            plt.title('Stock Prices')
+            plt.show()
+
         return stock_prices
 
     except ValueError as e:
@@ -104,13 +115,20 @@ def get_current_stock_prices(stocks: List[str] = None, details: str = None) -> D
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Retrieve current stock prices.")
-    parser.add_argument("-s", "--stocks", nargs="+", help="List of stocks to monitor.")
-    parser.add_argument("-d", "--default_stocks", nargs="+", help="Set the default stocks to monitor.")
-    parser.add_argument("-u", "--update_default_stocks", nargs="+", help="Update the default stocks.")
-    parser.add_argument('--details', nargs='?', const=True, help='Display additional details about a stock.')
-    args = parser.parse_args()
+    parser = argparse.ArgumentParser(description='Monitor and plot stocks.')
 
+    parser.add_argument('-s', '--stocks', nargs='+', metavar='STOCK_SYMBOL', help='List of stocks to monitor.')
+    parser.add_argument('-d', '--default_stocks', nargs='+', metavar='STOCK_SYMBOL', default=[],
+                        help='Set the default stocks to monitor.')
+    parser.add_argument('-u', '--update_default_stocks', nargs='+', metavar='STOCK_SYMBOL',
+                        help='Update the default stocks.')
+    parser.add_argument('-p', '--plot', nargs='?', const=True, default=False,
+                        help='Plot the current or default stocks.')
+    parser.add_argument('--details', nargs='?', const=True, default=False,
+                        help='Display additional details about a stock.')
+    parser.add_argument('-v', '--version', action='version', version='%(prog)s 1.0')
+
+    args = parser.parse_args()
     # Update the default stocks if requested
     if args.update_default_stocks:
         DEFAULT_STOCKS = update_default_stocks(args.update_default_stocks)
@@ -127,7 +145,4 @@ if __name__ == "__main__":
         query = DEFAULT_STOCKS
 
     # Retrieve and display the current stock prices
-    if args.details:
-        get_current_stock_prices(query, args.details)
-    else:
-        get_current_stock_prices(query)
+    get_current_stock_prices(query, args.details, args.plot)
