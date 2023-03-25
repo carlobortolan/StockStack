@@ -1,16 +1,16 @@
 # StockStack-CLI
 
-Look up current stock prices from your terminal.
+Look up and plot current stock prices from your terminal.
 
 This is a Python script for monitoring the current stock prices using the Yahoo Finance API to retrieve the latest
 stock prices and display them in the terminal.
 
 ## INSTALLATION
 
-1. Make sure to have [yfinance](https://pypi.org/project/yfinance/) installed
+1. Make sure to have [yfinance](https://pypi.org/project/yfinance/) and other needed dependecies installed
 
 ```
-$ pip install yfinance
+$ pip install .
 ```
 
 2. Clone this repository to your local machine
@@ -69,7 +69,7 @@ options:
 To retrieve the current stock prices for a list of stocks, run the script with the following command:
 
 ```
-python stock_price_monitor.py -s AAPL MSFT TSLA
+python caller.py -s AAPL MSFT TSLA
 ```
 
 This will display the current prices for Apple, Microsoft and Tesla stocks.
@@ -77,7 +77,7 @@ This will display the current prices for Apple, Microsoft and Tesla stocks.
 To set the default stocks to monitor, use the `-d` or `--default_stocks` option:
 
 ```
-python stock_price_monitor.py -d AAPL MSFT
+python caller.py -d AAPL MSFT
 ```
 
 This will set the default stocks to Apple and Microsoft.
@@ -85,7 +85,7 @@ This will set the default stocks to Apple and Microsoft.
 To update the default stocks, use the `-u` or `--update_default_stocks` option:
 
 ```
-python stock_price_monitor.py -u AAPL GOOG
+python caller.py -u AAPL GOOG
 ```
 
 This will add Apple and Google stocks to the default list (if not already added).
@@ -93,7 +93,19 @@ This will add Apple and Google stocks to the default list (if not already added)
 To view the current price of your default list run the script without any options:
 
 ```
-python stock_price_monitor.py
+python caller.py
+```
+
+To view details of your default list or other stocks use the `--details` option:
+
+```
+python caller.py --details
+```
+
+To plot the graph of your default list or other stocks use the `-p` or `--plot` option:
+
+```
+python caller.py -p
 ```
 
 ## CONTRIBUTING
