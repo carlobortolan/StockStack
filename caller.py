@@ -32,8 +32,29 @@ def write_default_stocks(default_stocks: List[str]) -> None:
     try:
         with open(DEFAULT_STOCKS_FILE, "w") as f:
             f.write("\n".join(default_stocks))
+            print(f"Default stocks updated: {', '.join(default_stocks)}")
     except IOError:
         print(f"Could not write {DEFAULT_STOCKS_FILE}")
+
+
+def update_default_stocks(new_stocks: List[str]) -> list[str] | list[Any]:
+    """
+    Update the default stocks with new_stocks.
+
+    Parameters:
+        new_stocks (list of str): A list of new stock symbols to add to the default stocks.
+
+    Returns:
+        None
+    """
+    default_stocks = read_default_stocks() or []
+    for stock in new_stocks:
+        if stock not in default_stocks:
+            default_stocks.append(stock)
+    with open(DEFAULT_STOCKS_FILE, "w") as f:
+        f.write("\n".join(default_stocks))
+    print(f"Default stocks updated: {', '.join(default_stocks)}")
+    return default_stocks
 
 
 DEFAULT_STOCKS = read_default_stocks() or ["AAPL", "MSFT", "TSLA"]
@@ -83,8 +104,7 @@ if __name__ == "__main__":
 
     # Update the default stocks if requested
     if args.update_default_stocks:
-        DEFAULT_STOCKS += args.update_default_stocks
-        write_default_stocks(DEFAULT_STOCKS)
+        DEFAULT_STOCKS = update_default_stocks(args.update_default_stocks)
 
     # Set the default stocks if provided
     if args.default_stocks:
