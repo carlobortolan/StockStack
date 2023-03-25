@@ -2,9 +2,26 @@
 
 Look up current stock prices from your terminal.
 
-```
-usage: caller.py [-h] [-s STOCKS [STOCKS ...]]
+## INSTALLATION
+1. Clone the repository
 
+  `git clone https://github.com/joschahenningsen/wikipedia-define-cli ~/wikipedia-define-cli`
+
+2. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
+
+  `echo 'alias <YOUR_ALIAS>="python3 ~/stockstack/caller.py"'>>~/.bashrc`
+
+3. Update your _.bashrc_, _.zshrc_, etc.
+
+  `source ~/.bashrc`
+
+## HOW TO USE
+
+```
+ $ <YOUR_ALIAS> [-h] [-s STOCKS [STOCKS ...]]
+```
+
+```
 Retrieve current stock prices.
 
 options:
