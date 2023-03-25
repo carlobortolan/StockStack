@@ -83,7 +83,7 @@ if __name__ == "__main__":
 
     # Update the default stocks if requested
     if args.update_default_stocks:
-        DEFAULT_STOCKS = args.update_default_stocks
+        DEFAULT_STOCKS += args.update_default_stocks
         write_default_stocks(DEFAULT_STOCKS)
 
     # Set the default stocks if provided
