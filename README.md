@@ -1,4 +1,4 @@
-# StockStack
+# StockStack-CLI
 
 Look up current stock prices from your terminal.
 
