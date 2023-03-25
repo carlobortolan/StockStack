@@ -6,6 +6,7 @@ DEFAULT_STOCKS = ["AAPL", "MSFT", "TSLA"]  # Default stocks to monitor
 
 
 def get_current_stock_prices(stocks=None):
+    print(stocks)
     """
     Retrieve and display the current stock prices for the given stocks.
 
@@ -17,6 +18,8 @@ def get_current_stock_prices(stocks=None):
     """
     if stocks is None:
         stocks = DEFAULT_STOCKS
+    if isinstance(stocks, str):
+        stocks = [stocks]
     try:
         tickers = yf.Tickers(stocks)
         data = tickers.history(period="1d", interval="1m")
