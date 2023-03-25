@@ -3,7 +3,26 @@ from typing import List, Dict, Any
 
 import yfinance as yf
 
-DEFAULT_STOCKS = ["AAPL", "MSFT", "TSLA"]  # Default stocks to monitor
+DEFAULT_STOCKS_FILE = "default_stocks.txt"  # Default stocks to monitor
+
+
+def read_default_stocks() -> List[str]:
+    """
+    Read the default stocks from the DEFAULT_STOCKS_FILE file.
+
+    Returns:
+        list: A list of default stock symbols.
+    """
+    try:
+        with open(DEFAULT_STOCKS_FILE, "r") as f:
+            default_stocks = f.read().splitlines()
+        return default_stocks
+    except IOError:
+        print(f"Could not read {DEFAULT_STOCKS_FILE}")
+        return []
+
+
+DEFAULT_STOCKS = read_default_stocks() or ["AAPL", "MSFT", "TSLA"]
 
 
 def get_current_stock_prices(stocks: List[str] = None) -> Dict[str, Any]:
