@@ -22,6 +22,20 @@ def read_default_stocks() -> List[str]:
         return []
 
 
+def write_default_stocks(default_stocks: List[str]) -> None:
+    """
+    Write the default stocks to the DEFAULT_STOCKS_FILE file.
+
+    Parameters:
+        default_stocks (list of str): A list of stock symbols to monitor.
+    """
+    try:
+        with open(DEFAULT_STOCKS_FILE, "w") as f:
+            f.write("\n".join(default_stocks))
+    except IOError:
+        print(f"Could not write {DEFAULT_STOCKS_FILE}")
+
+
 DEFAULT_STOCKS = read_default_stocks() or ["AAPL", "MSFT", "TSLA"]
 
 
@@ -64,11 +78,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Retrieve current stock prices.")
     parser.add_argument("-s", "--stocks", nargs="+", help="List of stocks to monitor.")
     parser.add_argument("-d", "--default_stocks", nargs="+", help="Set the default stocks to monitor.")
+    parser.add_argument("-u", "--update_default_stocks", nargs="+", help="Update the default stocks.")
     args = parser.parse_args()
+
+    # Update the default stocks if requested
+    if args.update_default_stocks:
+        DEFAULT_STOCKS = args.update_default_stocks
+        write_default_stocks(DEFAULT_STOCKS)
 
     # Set the default stocks if provided
     if args.default_stocks:
         DEFAULT_STOCKS = args.default_stocks
+        write_default_stocks(DEFAULT_STOCKS)
 
     # Determine which stocks to monitor
     if args.stocks:
