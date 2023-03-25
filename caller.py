@@ -1,8 +1,7 @@
+import yfinance as yf
 import argparse
 from typing import List, Dict, Any
 from pathlib import Path
-
-import yfinance as yf
 
 DEFAULT_STOCKS_FILE = "default_stocks.txt"  # Default stocks to monitor
 
@@ -51,9 +50,9 @@ def update_default_stocks(new_stocks: List[str]) -> List[str]:
         list: The updated list of default stocks.
     """
     default_stocks = read_default_stocks()
-    for stock in new_stocks:
-        if stock not in default_stocks:
-            default_stocks.append(stock)
+    for s in new_stocks:
+        if s not in default_stocks:
+            default_stocks.append(s)
     write_default_stocks(default_stocks)
     return default_stocks
 
@@ -61,12 +60,13 @@ def update_default_stocks(new_stocks: List[str]) -> List[str]:
 DEFAULT_STOCKS = read_default_stocks() or ["AAPL", "MSFT", "TSLA"]
 
 
-def get_current_stock_prices(stocks: List[str] = None) -> Dict[str, Any]:
+def get_current_stock_prices(stocks: List[str] = None, details: str = None) -> Dict[str, Any]:
     """
     Retrieve and display the current stock prices for the given stocks.
 
     Parameters:
         stocks (list of str): A list of stock symbols to monitor.
+        details (str): Additional details to display about the specified stock.
 
     Returns:
         dict: A dictionary mapping stock symbols to their current prices.
@@ -76,18 +76,25 @@ def get_current_stock_prices(stocks: List[str] = None) -> Dict[str, Any]:
     try:
         if len(stocks) == 1:
             ticker = yf.Ticker(stocks[0])
-            data = ticker.history(period="1d", interval="1m")
-            prices = data['Close'].values.tolist()
-            stock_prices = {}
         else:
-            tickers = yf.Tickers(stocks)
-            data = tickers.history(period="1d", interval="1m")
-            prices = data['Close'].values.tolist()
-            stock_prices = {}
+            ticker = yf.Tickers(stocks)
+
+        data = ticker.history(period="1d", interval="1m")
+        prices = data['Close'].values.tolist()
+        stock_prices = {}
+
         for stock, price in zip(stocks, prices):
             stock_prices[stock] = price
-            print(f"{stock}: ${price:}")
+            if details:
+                ticker = yf.Ticker(stock)
+                mh = ticker.major_holders
+                info = ticker.fast_info.toJSON()
+                print(f"{stock}: ${price:}, {info}")
+                print(f"{mh}")
+            else:
+                print(f"{stock}: ${price:}")
         return stock_prices
+
     except ValueError as e:
         print(f"Invalid stock symbol: {e}")
         return {}
@@ -101,6 +108,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--stocks", nargs="+", help="List of stocks to monitor.")
     parser.add_argument("-d", "--default_stocks", nargs="+", help="Set the default stocks to monitor.")
     parser.add_argument("-u", "--update_default_stocks", nargs="+", help="Update the default stocks.")
+    parser.add_argument('--details', nargs='?', const=True, help='Display additional details about a stock.')
     args = parser.parse_args()
 
     # Update the default stocks if requested
@@ -119,4 +127,7 @@ if __name__ == "__main__":
         query = DEFAULT_STOCKS
 
     # Retrieve and display the current stock prices
-    get_current_stock_prices(query)
+    if args.details:
+        get_current_stock_prices(query, args.details)
+    else:
+        get_current_stock_prices(query)

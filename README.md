@@ -2,8 +2,8 @@
 
 Look up current stock prices from your terminal.
 
-This is a Python script for monitoring the current stock prices. It uses the Yahoo Finance API to retrieve the latest
-stock prices and displays them in the terminal.
+This is a Python script for monitoring the current stock prices using the Yahoo Finance API to retrieve the latest
+stock prices and display them in the terminal.
 
 ## INSTALLATION
 
@@ -41,14 +41,14 @@ $ source ~/.bashrc
 Retrieve current stock prices.
 
 ```
-$ <YOUR_ALIAS> []
-               [-h] 
-               [-s STOCKS [STOCKS ...]]
-               [-d DEFAULT_STOCKS [DEFAULT_STOCKS ...]]
-               [-u UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...]]
+$ <YOUR_ALIAS>   [] [-h] [-s STOCKS [STOCKS ...]]
+                 [-d DEFAULT_STOCKS [DEFAULT_STOCKS ...]]
+                 [-u UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...]]
+                 [--details [DETAILS]]
 ```
 
 ```
+options:
 options:
   -h, --help            show this help message and exit
   -s STOCKS [STOCKS ...], --stocks STOCKS [STOCKS ...]
@@ -57,6 +57,7 @@ options:
                         Set the default stocks to monitor.
   -u UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...], --update_default_stocks UPDATE_DEFAULT_STOCKS [UPDATE_DEFAULT_STOCKS ...]
                         Update the default stocks.
+  --details [DETAILS]   Display additional details about a stock.
 ```
 
 ## EXAMPLES
