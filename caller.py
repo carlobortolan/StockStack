@@ -1,12 +1,14 @@
 import argparse
+from typing import List, Dict
+
 import yfinance as yf
 
 DEFAULT_STOCKS = ["AAPL", "MSFT", "TSLA"]  # Default stocks to monitor
 
 
-def get_current_stock_prices(stocks):
+def get_current_stock_prices(stocks: List[str] = None) -> Dict[str, float]:
     """
-    Retrieve the current stock prices for the given stocks.
+    Retrieve and display the current stock prices for the given stocks.
 
     Parameters:
         stocks (list of str): A list of stock symbols to monitor.
@@ -14,33 +16,29 @@ def get_current_stock_prices(stocks):
     Returns:
         dict: A dictionary mapping stock symbols to their current prices.
     """
-    stock_prices = {}
+    if stocks is None:
+        stocks = DEFAULT_STOCKS
     try:
         if len(stocks) == 1:
             ticker = yf.Ticker(stocks[0])
             data = ticker.history(period="1d", interval="1m")
             prices = data['Close'].values.tolist()
-            stock_prices[stocks[0]] = prices[0]
+            stock_prices = {}
         else:
             tickers = yf.Tickers(stocks)
             data = tickers.history(period="1d", interval="1m")
-            prices = data['Close'].iloc[-1].tolist()
-            for stock, price in zip(stocks, prices):
-                stock_prices[stock] = price
-        return stock_prices
-    except yf.errors.YfinanceError as e:
-        raise ValueError(str(e))
-
-
-def print_stock_prices(stock_prices):
-    """
-    Print the current stock prices to the console.
-
-    Parameters:
-        stock_prices (dict): A dictionary mapping stock symbols to their current prices.
-    """
-    for stock, price in stock_prices.items():
-        print(f"{stock}: ${price}")
+            prices = data['Close'].values.tolist()
+            stock_prices = {}
+        for stock, price in zip(stocks, prices):
+            stock_prices[stock] = price
+            print(f"{stock}: ${price:.2f}")
+            return stock_prices
+    except ValueError as e:
+        print(f"Invalid stock symbol: {e}")
+        return {}
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return {}
 
 
 if __name__ == "__main__":
@@ -54,11 +52,5 @@ if __name__ == "__main__":
     else:
         query = DEFAULT_STOCKS
 
-    # Retrieve the current stock prices
-    try:
-        stock_prices = get_current_stock_prices(query)
-        print_stock_prices(stock_prices)
-    except ValueError as e:
-        print(f"Invalid stock symbol: {str(e)}")
-    except Exception as e:
-        print(f"An error occurred: {str(e)}")
+    # Retrieve and display the current stock prices
+    get_current_stock_prices(query)
