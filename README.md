@@ -7,7 +7,11 @@ stock prices and display them in the terminal.
 
 ## INSTALLATION
 
-1. Simply run `pip install StockStack`
+1. Simply run 
+
+```
+$ pip install StockStack
+```
 
 2. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
 

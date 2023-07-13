@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setup(
     name='StockStack',
-    version='0.1',
+    version='0.1.1',
     author='Carlo Bortolan',
     author_email='carlobortolan@gmail.com',
     description='Look up and plot current stock prices from your terminal',
