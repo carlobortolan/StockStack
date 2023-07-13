@@ -7,19 +7,9 @@ stock prices and display them in the terminal.
 
 ## INSTALLATION
 
-1. Make sure to have [yfinance](https://pypi.org/project/yfinance/) and other needed dependecies installed
+1. Simply run `pip install StockStack`
 
-```
-$ pip install -r stockstack/requirements.txt
-```
-
-2. Clone this repository to your local machine
-
-```
-$ git clone https://github.com/carlobortolan/StockStack.git ~/stockstack
-```
-
-3. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
+2. Add <YOUR_ALIAS> as an alias to your _.bashrc_, _.zshrc_, etc.
 
 ```
 $ echo 'alias <YOUR_ALIAS>="python3 ~/stockstack/caller.py"'>>~/.bashrc
@@ -30,7 +20,7 @@ $ echo 'alias <YOUR_ALIAS>="python3 ~/stockstack/caller.py"'>>~/.bashrc
 > $ echo '<YOUR_ALIAS>'>>~/.bashrc
 > ```
 
-4. Update your _.bashrc_, _.zshrc_, etc.
+3. Update your _.bashrc_, _.zshrc_, etc.
 
 ```
 $ source ~/.bashrc
