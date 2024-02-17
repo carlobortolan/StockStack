@@ -58,7 +58,8 @@ options:
 
 ## EXAMPLES
 
-> _**NOTE**: Replace with your alias if necessary._
+> [!NOTE]
+> Replace with your alias if necessary.
 
 To retrieve the current stock prices for a list of stocks, run the script with the following command:
 
